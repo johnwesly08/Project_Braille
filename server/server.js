@@ -9,7 +9,7 @@ const app = express();
 // Middleware
 app.use(cors({
   // Replace this with your EXACT Netlify URL (no trailing slash)
-  origin: ["https://project-braille.netlify.app/", "http://localhost:5173"], 
+  origin: ["https://project-braille.netlify.app", "http://localhost:5173"], 
   credentials: true, // Allows cookies/headers to be sent safely
   methods: ["GET", "POST", "PUT", "DELETE"]
 }));
