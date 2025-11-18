@@ -7,15 +7,22 @@ require('dotenv').config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  // Replace this with your EXACT Netlify URL (no trailing slash)
+  origin: ["https://project-braille.netlify.app/", "http://localhost:5173"], 
+  credentials: true, // Allows cookies/headers to be sent safely
+  methods: ["GET", "POST", "PUT", "DELETE"]
+}));
 app.use(express.json());
 
 // Email transporter configuration
 const transporter = nodemailer.createTransport({
-  service: 'gmail', // or 'outlook', 'yahoo', etc.
+  host: 'smtp.gmail.com', // Force Gmail Host
+  port: 465,              // Force Secure SSL Port
+  secure: true,           // Mandatory for Port 465
   auth: {
-    user: process.env.EMAIL_USER, // Your email
-    pass: process.env.EMAIL_PASS  // Your email password or app password
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
   }
 });
 
