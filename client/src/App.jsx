@@ -36,7 +36,8 @@ export default function BrailleReadLanding() {
     setIsMenuOpen(false);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) {
       setFormStatus('Please fill in all fields');
       return;
@@ -52,6 +53,12 @@ export default function BrailleReadLanding() {
         },
         body: JSON.stringify(formData)
       });
+      
+      // This prevents crashes if Render returns a 500/502 HTML Error Page
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+         throw new Error("Server error (Not JSON). Please try again later.");
+      }
 
       const data = await response.json();
 
